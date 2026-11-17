@@ -11,6 +11,7 @@
 void createObservations(entt::registry &registry)
 {
     update_observation_for_soldiers(registry);
+    update_observation_for_commanders(registry);
 }
 
 /**
@@ -46,8 +47,8 @@ void updatePositions(entt::registry &registry, float time_step)
     auto view = registry.view<position, const velocity>();
     
     for(auto [entity, pos, vel]: view.each()) {
-        pos.x = vel.x * time_step;
-        pos.y = vel.y * time_step;
+        pos.x += vel.x * time_step;
+        pos.y += vel.y * time_step;
     }
 
     update_grids(registry);

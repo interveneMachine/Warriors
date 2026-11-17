@@ -1,20 +1,6 @@
 #include <entt/entt.hpp>
 
-struct closestEnemy {
-    float distance;
-    float direction;
-};
-
-struct alliesInRadius {
-    unsigned int number;
-    unsigned int panicked;
-    unsigned int disabled;
-};
-
-struct enemiesInRadius {
-    unsigned int number;
-    unsigned int panicked;
-    unsigned int disabled;
-};
+#include <agents/components.h>
 
 void update_observation_for_soldiers(entt::registry &registry);
+void update_observation_for_commanders(entt::registry &registry);
