@@ -10,6 +10,7 @@ add_executable(warriors
     src/simulation/observation.cpp
     src/movement/spatial_grid.cpp
     src/command/basic_commander.cpp
+    src/simulation/decisions/basic_commander.cpp
 )
 target_compile_features(warriors PRIVATE cxx_std_20)
 set_target_properties(warriors PROPERTIES CXX_EXTENSIONS OFF)

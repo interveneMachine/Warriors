@@ -2,6 +2,7 @@
 
 #include <simulation/simulation.h>
 #include <simulation/observation.h>
+#include <simulation/decisions/basic_commander.h>
 #include <movement/spatial_grid.h>
 #include <agents/components.h>
 
@@ -17,17 +18,17 @@ void createObservations(entt::registry &registry)
 /**
  * @brief sends orders that are due
  */
-void sendOrders(entt::registry &registry)
+void sendOrders(entt::registry &registry, double simulation_time)
 {
-
+    update_current_order(registry, simulation_time);
 }
 
 /**
  * @brief calculates decisions made by commanders
  */
-void calculateNewOrdersFromCommanders(entt::registry &registry)
+void calculateNewOrdersFromCommanders(entt::registry &registry, double simulation_time)
 {
-
+    calculate_new_order(registry, simulation_time);
 }
 
 /**
@@ -84,14 +85,16 @@ void collectMetrics(entt::registry &registry)
  * @brief function that runs one step of simulation
  * goes over each phase of simulation
  */
-void runSimulationStep(entt::registry &registry, float time_step)
+void runSimulationStep(entt::registry &registry, float time_step, double &simulation_time)
 {
     createObservations(registry);
-    sendOrders(registry);
-    calculateNewOrdersFromCommanders(registry);
+    sendOrders(registry, simulation_time);
+    calculateNewOrdersFromCommanders(registry, simulation_time);
     calculateSoldierDecisions(registry);
     updatePositions(registry, time_step);
     checkAttackRanges(registry);
     updateAgentStates(registry, time_step);
     collectMetrics(registry);
+
+    simulation_time += time_step;
 }

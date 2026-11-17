@@ -27,6 +27,15 @@ enum side
     SIDE1
 };
 
+/**
+ * @brief information about type of agent
+ * influences how desicions are calculated
+ */
+enum agentType
+{
+    BASIC_AGENT_TYPE // used for tests
+};
+
 struct perception
 {
     float allies_perception_radius;
@@ -38,6 +47,27 @@ struct perception
 enum status
 {
     FINE, DISABLED, PANICKED, RETREATING
+};
+
+//////////////////////////////////////////////
+// components updated by observation system //
+//////////////////////////////////////////////
+
+struct closestEnemy {
+    float distance;
+    position pos;
+};
+
+struct alliesInRadius {
+    unsigned int number;
+    unsigned int panicked;
+    unsigned int disabled;
+};
+
+struct enemiesInRadius {
+    unsigned int number;
+    unsigned int panicked;
+    unsigned int disabled;
 };
 
 #endif

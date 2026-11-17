@@ -25,14 +25,16 @@ void addAgentsToRegistry(entt::registry &registry)
 int main()
 {
     entt::registry registry;
-    float time_step = 0.1; // in seconds
+    double simulation_time = 0.f;
+    float time_step = 0.1f; // in seconds
 
     addAgentsToRegistry(registry);
-    create_grids(registry);
+    create_grids(registry, 5.f);
 
+    int i = 0;
     while(true)
     {
-        runSimulationStep(registry, time_step);
+        runSimulationStep(registry, time_step, simulation_time);
         
         registry.view<relationToCommander, position>().each([](const auto entity, const auto &relation, const auto &pos) {
             std::cout << "entity " << static_cast<unsigned>(entt::to_integral(entity))
@@ -40,7 +42,8 @@ int main()
                       << static_cast<unsigned>(entt::to_integral(relation.parent))
                       << " position -> " << pos.x << " " << pos.y << "\n";
             });
-        break;
+        i++;
+        if(i > 4) break;
     }
     return 0;
 }
