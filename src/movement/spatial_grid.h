@@ -9,9 +9,11 @@
  * @brief divides world into cells
  * supports positions from cell_size*MIN_INT to cell_size*MAX_INT
  */
-struct SpatialGrid {
-    float cell_size;
+class SpatialGrid {
+    const float cell_size;
     std::unordered_map<std::int64_t, std::vector<entt::entity>> cells;
+public:
+    SpatialGrid(float cell_size) : cell_size(cell_size) {}
 
     int  idx(float v) const { return static_cast<int>(std::floor(v / cell_size)); }
     static std::int64_t key(int cx, int cy) {
@@ -30,14 +32,19 @@ struct SpatialGrid {
     }
 };
 
-struct Grids {
+class Grids {
     SpatialGrid grid0;
     SpatialGrid grid1;
+public:
+    Grids(float cell_size) : grid0(cell_size), grid1(cell_size) {}
     SpatialGrid& get_allies(side myside)  {return myside==SIDE0 ? grid0 : grid1;};
     SpatialGrid& get_enemies(side myside) {return myside==SIDE0 ? grid1 : grid0;};
+    void clear() {
+        grid0.clear(); grid1.clear();
+    }
 };
 
-void create_grids(entt::registry &registry);
+void create_grids(entt::registry &registry, float cell_size);
 void update_grids(entt::registry &registry);
 
 #endif
